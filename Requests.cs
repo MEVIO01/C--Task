@@ -24,7 +24,7 @@ namespace OlegTask
         {
             foreach (var req in this.reqs)
             {
-                Console.WriteLine(req.DisplayRequest());
+                Console.WriteLine(req.GetRequest());
             }
         }
     }

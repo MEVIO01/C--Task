@@ -22,11 +22,7 @@ namespace OlegTask
         {
             Array.Sort(this.req);
         }
-        public Request GetRequest()
-        {
-            return this;
-        }
-        public string DisplayRequest()
+        public string GetRequest()
         {
             return string.Join(",", this.req);
         }
