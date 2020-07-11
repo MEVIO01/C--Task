@@ -40,6 +40,23 @@ namespace OlegTask
         {
             return this.objects.Single(o => o.Id == id);
         }
+        public void ReadRequest(Request request)
+        {
+            string[] availableIds = this.GetAll().GetRequest().Split(',');
+            string[] requestedIds = request.GetRequest().Split(',');
 
+            var availableIdsHash = new HashSet<string>(availableIds);
+            var requestedIdsHash = new HashSet<string>(requestedIds);
+
+            var toUpdate = new HashSet<string>(availableIdsHash);
+            toUpdate.IntersectWith(requestedIdsHash);
+
+            var toAdd = new HashSet<string>(requestedIdsHash);
+            toAdd.ExceptWith(toUpdate);
+
+            var toRemove = new HashSet<string>(requestedIdsHash);
+            toAdd.ExceptWith(toAdd);
+            toAdd.ExceptWith(toUpdate);
+        }
     }
 }
