@@ -27,18 +27,19 @@ namespace OlegTask
         {
             this.objects.Add(person);
         }
-        //public void Update(int id)
-        //{
-        //    var obj = objects.FirstOrDefault(x => x.Id == id);
-        //    if (obj != null)
-        //    {
-        //        obj.Name = newValue;
-        //    }
-        //}
-        //private Person FindObject(int id)
-        //{
-        //    return this.objects.Single(s => s.Id == id);
-        //}
-        
+        public void Update(int id)
+        {
+            Person person = FindObject(id);
+            person.Salary = new SalaryGenerator().Generate();
+        }
+        public void Remove(int id)
+        {
+            this.objects.Remove(FindObject(id));
+        }
+        private Person FindObject(int id)
+        {
+            return this.objects.Single(o => o.Id == id);
+        }
+
     }
 }

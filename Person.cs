@@ -21,5 +21,11 @@ namespace OlegTask
             this.Salary = salary;
             this.CompanyName = companyName;
         }
+        public override string ToString()
+        {
+            return "Id : " + this.Id + Environment.NewLine +
+                "Name : " + this.Name + Environment.NewLine + "Company name : " + this.CompanyName +
+                Environment.NewLine + "Salary : " + this.Salary.ToString();
+        }
     }
 }
