@@ -40,7 +40,7 @@ namespace OlegTask
         {
             return this.objects.Single(o => o.Id == id);
         }
-        public void ReadRequest(Request request)
+        public void ProcessRequest(Request request)
         {
             string[] availableIds = this.GetAll().GetRequest().Split(',');
             string[] requestedIds = request.GetRequest().Split(',');
@@ -55,8 +55,25 @@ namespace OlegTask
             toAdd.ExceptWith(toUpdate);
 
             var toRemove = new HashSet<string>(requestedIdsHash);
-            toAdd.ExceptWith(toAdd);
-            toAdd.ExceptWith(toUpdate);
+            toRemove.ExceptWith(toAdd);
+            toRemove.ExceptWith(toUpdate);
+
+            PersonGenerator personGenerator = new PersonGenerator();
+
+            foreach (var item in toAdd)
+            {
+                this.Add(personGenerator.Generate(Convert.ToInt32(item)));
+            }
+
+            foreach (var item in toUpdate)
+            {
+                this.Update(Convert.ToInt32(item));
+            }
+
+            foreach (var item in toRemove)
+            {
+                this.Remove(Convert.ToInt32(item));
+            }
         }
     }
 }

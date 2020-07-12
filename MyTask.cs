@@ -10,8 +10,15 @@ namespace OlegTask
         {
             MyDB myDB = new MyDB();
             RequestGenerator requestGenerator = new RequestGenerator();
-            Request request = requestGenerator.Generate();
-
+            Request request = new Request();
+            for (int i = 0; i < 3; i++)
+            {
+                request = requestGenerator.Generate();
+                Console.WriteLine("Request was : " + request.GetRequest());
+                myDB.ProcessRequest(request);
+                Console.WriteLine("Result is : " + myDB.GetAll().GetRequest());
+                Console.WriteLine();
+            }
         }
     }
 }
