@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 
 namespace OlegTask
 {
@@ -12,6 +14,15 @@ namespace OlegTask
         public MyDB()
         {
             this.objects = new List<Person>();
+        }
+        public void Serialize()
+        {
+            var options = new JsonSerializerOptions
+            {
+                WriteIndented = true
+            };
+            var json = JsonSerializer.Serialize(this.objects, options);
+            Console.WriteLine(json);
         }
         public Request GetAll()
         {
@@ -54,8 +65,7 @@ namespace OlegTask
             var toAdd = new HashSet<string>(requestedIdsHash);
             toAdd.ExceptWith(toUpdate);
 
-            var toRemove = new HashSet<string>(requestedIdsHash);
-            toRemove.ExceptWith(toAdd);
+            var toRemove = new HashSet<string>(availableIdsHash);
             toRemove.ExceptWith(toUpdate);
 
             PersonGenerator personGenerator = new PersonGenerator();
@@ -69,11 +79,14 @@ namespace OlegTask
             {
                 this.Update(Convert.ToInt32(item));
             }
-
             foreach (var item in toRemove)
             {
-                this.Remove(Convert.ToInt32(item));
+                if(item != "")
+                {
+                    this.Remove(Convert.ToInt32(item));
+                }
             }
+
         }
     }
 }

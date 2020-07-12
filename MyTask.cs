@@ -17,6 +17,7 @@ namespace OlegTask
                 Console.WriteLine("Request was : " + request.GetRequest());
                 myDB.ProcessRequest(request);
                 Console.WriteLine("Result is : " + myDB.GetAll().GetRequest());
+                myDB.Serialize();
                 Console.WriteLine();
             }
         }
